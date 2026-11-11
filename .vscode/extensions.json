@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "laravel.vscode-laravel",
+        "devsense.phptools-vscode",
+        "alexcvzz.vscode-sqlite",
+        "bradlc.vscode-tailwindcss"
+    ]
+}

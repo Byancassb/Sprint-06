@@ -1,0 +1,32 @@
+<?php
+
+use App\Http\Controllers\EventoController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PerguntaController;
+use App\Http\Controllers\RegisterController;
+use Illuminate\Support\Facades\Route;
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/eventos/create', [EventoController::class, 'create'])->name('eventos.create');
+    Route::post('/eventos', [EventoController::class, 'store'])->name('eventos.store');
+
+    // TICKET #005: só usuários logados podem enviar perguntas
+    Route::post('/eventos/{id}/perguntas', [EventoController::class, 'storePergunta'])->name('eventos.perguntas.store');
+
+    // TICKET #011: alterna (toggle) o upvote do usuário logado
+    Route::post('/perguntas/{pergunta}/votar', [PerguntaController::class, 'votar'])->name('perguntas.votar');
+});
+
+
+Route::get('/', [EventoController::class, 'index'])->name('eventos.index');
+Route::get('/eventos/{id}', [EventoController::class, 'show'])->name('eventos.show');
+
+
+Route::get('/register', [RegisterController::class, 'create'])->name('register.create');
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+Route::get('/login', [LoginController::class, 'create'])->name('login.create');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+Route::post('/logout', [LoginController::class, 'logout'])->name('auth.logout');
+
+
